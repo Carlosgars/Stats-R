@@ -1,0 +1,148 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2512
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 TimesNewRomanPSMT;\f1\froman\fcharset0 TimesNewRomanPS-BoldMT;\f2\froman\fcharset0 TimesNewRomanPS-BoldItalicMT;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28800\viewh18000\viewkind1
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Carlos Garc\'eda Sancho Grupo 2 MLDE\
+\
+PR\'c1CTICA VENTA DE COCHES\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \expnd0\expndtw0\kerning0
+A).- Indicar las dos variables explicativas que tienen mayor relaci\'f3n lineal con la variable respuesta. Justificaci\'f3n. Importancia.
+\f0\b0 \
+\
+Deducimos a partir del mapa de calor y la matriz de covarianzas que las variables explicativas con mayor relaci\'f3n lineal para la variable respuesta (reventa) son caballos y precio, por tanto deducimos que a partir de ambas podremos obtener un buen modelo lineal para predecir la variable reventa. (Antes debemos ver la colinealidad entre estas dos variables, si es alta puede existir el problema de multicolinealidad, con lo cual el modelo obtenido no ser\'eda bueno)\
+\
+
+\f1\b B).- Indicar las dos parejas de variables explicativas que tienen mayor relaci\'f3n lineal entre ellas. Justificaci\'f3n. \'bfQu\'e9 consecuencias puede tener estas relaciones en este estudio? 
+\f0\b0 \
+\
+Variables fuertemente relacionadas: Longitud-batalla (0.853) Caballos-Motor (0.86)\
+En la tabla de correlaciones observamos que las parejas de variables explicativas con mayor relaci\'f3n lineal son Longitud-Batalla y Caballos-motor. \
+Que existan variables explicativas tan correlacionadas implica que pueda existir el problema de multicolinealidad. Tambi\'e9n lo vemos en que el determinante de ls matriz de correlaciones es muy pr\'f3ximo a cero, lo que tambi\'e9n nos muestra que puede existir el problemas de multicolinealidad y que nuestro modelo no sea bueno.\
+\
+
+\f1\b C).- Relacionar a trav\'e9s de un modelo lineal la variable respuesta en funci\'f3n del tipo de veh\'edculo. Interpretar el estimador del coeficiente asociado en el modelo al tipo de veh\'edculo.\
+
+\f0\b0 \
+La variable tipo es de clase factor, esta codificada por cero y uno (autom\'f3vil y cami\'f3n, respectivamente) por lo que podemos hacer la regresi\'f3n lineal de la reventa respecto el tipo.\
+Planteamos un modelo Y = B0 + B1 \'b7 tipo.\
+Planteamos los Contrastes de Hip\'f3tesis \
+H0 : Bi = 0 \
+H1:  Bi /= 0\
+Para i = 0,  obtenemos un p-valor muy pr\'f3ximo a cero, luego rechazamos la hip\'f3tesis nula.\
+Para i = 1, obtenemos un p-valor de 0.326, mayor que el nivel de significaci\'f3n, luego no podemos rechazar la hip\'f3tesis nula. B1 es 0, por tanto no influye el valor del tipo en nuestro modelo, es un modelo p\'e9simo.\
+No se cumple la hip\'f3tesis de normalidad de los residuos.\
+\
+
+\f1\b   D).- Obtener el modelo que permita explicar la variable respuesta en funci\'f3n de todas las variables explicativas (sin incluir marcas ni modelo). \
+
+\f0\b0 \
+Obtenemos mediante el comando lm el modelo 
+\f2\i\b todas.car.lm
+\f0\i0\b0  que explica la variable reventa en funci\'f3n del conjunto de variables \
+\{ventas, tipo, precio, motor_s, caballos, batalla, anchura, longitud, peso_revestimiento, tap\'f3n_combustible, kpl\}.\
+\
+\
+
+\f1\b E).- Aplicar los m\'e9todos de selecci\'f3n paso a paso y: \
+- Comparar, brevemente, los diferentes modelos obtenidos, en los apartados D y E 
+\f0\b0 \
+\
+1. Aplicamos el m\'e9todo de selecci\'f3n de variables por p-valor\
+\
+Quitamos las variables usadas en el modelo todas.car.lm con los p-valores grandes (R nos indica el valor de significaci\'f3n de cada variable con *), qued\'e1ndonos con el siguiente conjunto de variables: \
+\{precio, motor_s, longitud, peso_revestimiento, tap\'f3n_combustible\}\
+Hacemos un modelo con estas variables y volvemos a ver los p-valores que obtenemos. Repetimos el proceso anterior. Finalmente nos quedamos con las variables \
+\{precio, longitud, peso_revestimiento, tap\'f3n_combustible\} y hacemos un nuevo modelo con ellas, al que llamamos 
+\f2\i\b car.pvalor.lm
+\f0\i0\b0 .\
+\
+2. Aplicamos el m\'e9todo de regresi\'f3n paso a paso. (Comando step)\
+\
+Regresi\'f3n hacia atr\'e1s y hacia delante.  Nos quedamos con las variables siguientes:\
+\{precio, motor_s, longitud, peso_revestimiento, tap\'f3n_combustible, kpl\}\
+Llamamos a este modelo 
+\f2\i\b car.stepbnf.lm
+\f0\i0\b0 .\
+\
+Regresi\'f3n hacia atr\'e1s. Con este m\'e9todo obtenemos el modelo anterior.\
+\
+Regresi\'f3n hacia delante. Hacemos el modelo 
+\f2\i\b car.stepforward.lm
+\f0\i0\b0  con las variables\
+\{precio, longitud, peso_revestimiento, tap\'f3n_combustible\}.\
+\
+3.  Mejor selecci\'f3n de subconjuntos.\
+\
+Observamos el subconjunto de variables cuyo modelo tiene mayor R cuadrado y obtenemos el modelo de regresi\'f3n lineal a partir de las variables \{precio, motor_s, caballos, batalla, longitud, peso_revestimiento, tap\'f3n_combustible, kpl\}, 
+\f2\i\b car.subset.rsq
+\f0\i0\b0 .\
+\
+Tambi\'e9n tomamos el subconjunto de variables cuyo modelo tiene menor BIC,
+\f1\b \
+
+\f0\b0 \{precio, longitud, peso_revestimiento, tap\'f3n_combustible\} y observamos que es el mismo que obtuvimos con el m\'e9todo de selecci\'f3n de variables por p-valor 
+\f2\i\b car.pvalor.lm
+\f0\i0\b0 .\
+\
+Hemos obtenido los modelos 
+\f2\i\b todas.car.lm
+\f0\i0\b0 , 
+\f2\i\b car.pvalor.lm
+\f0\i0\b0 , 
+\f2\i\b car.stepbnf.lm
+\f0\i0\b0 , 
+\f2\i\b car.stepforward.lm
+\f0\i0\b0  y 
+\f2\i\b car.subset.rsq
+\f0\i0\b0 .\
+Los comparamos por bondad de ajuste y vemos que todas son parecidos.\
+Los comparamos por BIC y vemos que el menor lo tiene el modelo 
+\f2\i\b car.stepforward.lm
+\f0\i0\b0     \
+BIC = 595.8155. \
+El modelo con el m\'e1s bajo valor de BIC es considerado el mejor en explicar los datos con el m\'ednimo n\'famero de par\'e1metros.\
+\
+\
+
+\f1\b F).- \'bfQu\'e9 modelo propondr\'eda? Justificar la respuesta e intenta dar una interpretaci\'f3n del mismo, desde el punto de vista del vendedor de veh\'edculos.
+\f0\b0  \
+\
+Por lo anterior propondr\'eda el modelo 
+\f2\i\b car.stepforward.lm
+\f0\i0\b0 , que hace uso de las variables\
+\{precio, longitud, peso_revestimiento, tap\'f3n_combustible\}.\
+Tiene un menor BIC, un indicador que premia el ajuste o la capacidad explicativa pero penaliza su complejidad.\
+Un modelo menos complejo puede suponer una mejor predicci\'f3n para nuevos datos.\
+ \
+El coeficiente de la variable precio en nuestro modelo es 0.84, teniendo en cuenta que la variable respuesta reventa y la variable precio est\'e1n en distintas escalas (reventa en euros y precio en miles de euros) podemos ver que est\'e1 es la variable m\'e1s explicativa, lo cu\'e1l tiene l\'f3gica.\
+El coeficientes de longitud y peso revestimiento son negativos, lo cual muestra que a mayor reventa, menor longitud e igual con peso revestimiento. Esto puede significar que en el mercado de segunda mano tienen mayor valor los coches peque\'f1os que los coches grandes.\
+\
+\
+
+\f1\b G).- Realizar una predicci\'f3n puntual del precio de reventa de un veh\'edculo con las caracter\'edsticas medias de la base de datos. C\'e1lculo e interpretaci\'f3n de los intervalos asociados a dicha predicci\'f3n a un nivel de confianza del 95%.
+\f0\b0 \
+\
+Realizamos dicha predicci\'f3n y obtenemos un valor de 18.03154, que coincide con la media de la reventa de nuestros datos.\
+Obtenemos el siguiente intervalo de confianza del 95%: [17.51998, 18.5431].\
+\
+\
+\
+\
+
+\f1\b H).- Obtener el mejor modelo, desde el punto de vista matem\'e1tico, con solamente tres variables explicativas. Breve estudio del mismo.
+\f0\b0 \
+\
+El mejor modelo con tres variables explicativas se obtiene a partir de \{precio, peso_revestimiento, tap\'f3n_combustible\} seg\'fan el comando regsubsets de la librer\'eda leaps, \
+pero el modelo que obtenemos a partir de estas tres variables \
+reventa = B0 + B1 \'b7 precio + B2 \'b7 peso_revestimiento + B3 \'b7 tap\'f3n_combustible\
+tiene B2=B3=0, luego es en realidad \
+reventa = B0 + B1 \'b7 precio\
+\
+}
